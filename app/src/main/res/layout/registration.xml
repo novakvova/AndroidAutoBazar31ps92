@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
+    android:layout_height="match_parent"
+    tools:context=".RegistrationActivity">
     <TextView
         android:id="@+id/loginscrn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:text="Login"
+        android:text="Registration"
         android:textSize="25dp"
         android:textStyle="bold"
         android:layout_gravity="center"/>
@@ -22,22 +20,31 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="20dp"
-        android:text="Email"/>
-
+        android:text="Full Name"/>
+    <EditText
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:ems="10"/>
+    <TextView
+        android:id="@+id/secTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:layout_marginLeft="100dp" />
     <EditText
         android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
-        android:ems="10"/>
-
+        android:ems="10" />
     <TextView
-        android:id="@+id/secTxt"
+        android:id="@+id/thirdTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password"
         android:layout_marginLeft="100dp" />
-
     <EditText
         android:id="@+id/txtPwd"
         android:layout_width="wrap_content"
@@ -45,22 +52,19 @@
         android:layout_marginLeft="100dp"
         android:inputType="textPassword"
         android:ems="10" />
-
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
         android:text="Login" />
-
-    <TextView android:id="@+id/lnkRegister"
+    <TextView android:id="@+id/lnkLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="New to Tutlane? Register here"
+        android:text="Already Registered? Login here"
         android:gravity="center"
         android:textSize="20dp"
-        android:onClick="onButtonClick"
-        android:textColor="#3F51B5"/>
-
+        android:textColor="#3F51B5"
+        android:onClick="test"/>
 </LinearLayout>
