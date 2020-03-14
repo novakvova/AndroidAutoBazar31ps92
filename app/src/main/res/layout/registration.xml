@@ -47,14 +47,27 @@
         android:inputType="textPassword"/>
 
     <TextView
-        android:id="@+id/thirdTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:text="Ім'я" />
+    android:id="@+id/thirdTxt"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="100dp"
+    android:text="Ім'я" />
 
     <EditText
         android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:ems="10" />
+    <TextView
+        android:id="@+id/forthTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:text="Телефон" />
+
+    <EditText
+        android:id="@+id/txtPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
@@ -65,7 +78,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
-        android:text="Login" />
+        android:onClick="SendRegistrationData"
+        android:text="Зареєструватись" />
 
     <TextView
         android:id="@+id/lnkLogin"
@@ -74,7 +88,7 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:onClick="test"
-        android:text="Already Registered? Login here"
+        android:text="У мене вже є аккаунт! Увійти."
         android:textColor="#3F51B5"
-        android:textSize="20dp" />
+        android:textSize="15dp" />
 </LinearLayout>
