@@ -2,6 +2,8 @@ package com.example.salo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.salo.prductview.ProductGridFragment;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationHost {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +77,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.item1:
-                Toast.makeText(this, "Item 1 selected", Toast.LENGTH_LONG).show();
+            case R.id.home:
+                this.navigateTo(new ProductGridFragment(), true);
                 return true;
-            case R.id.item2:
-                Toast.makeText(this, "Item 2 selected", Toast.LENGTH_LONG).show();
+            case R.id.login:
+                this.navigateTo(new LoginFragment(), true);
+                return true;
+            case R.id.register:
+                this.navigateTo(new RegisterFragment(), true);
                 return true;
             case R.id.item3:
                 Toast.makeText(this, "Item 3 selected", Toast.LENGTH_LONG).show();
@@ -91,5 +98,19 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void navigateTo(Fragment fragment, boolean addToBackstack) {
+        FragmentTransaction transaction =
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment);
+
+        if (addToBackstack) {
+            transaction.addToBackStack(null);
+        }
+
+        transaction.commit();
     }
 }
