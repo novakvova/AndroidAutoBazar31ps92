@@ -25,36 +25,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView textView = findViewById(R.id.txtEmail);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, new LoginFragment())
+                    .commit();
+        }
 
-        NetworkService.getInstance()
-                .getJSONApi()
-                .getPostWithID(1)
-                .enqueue(new Callback<Post>() {
-                    @Override
-                    public void onResponse(@NonNull Call<Post> call, @NonNull Response<Post> response) {
-                        Post post = response.body();
-
-                        textView.append(post.getId() + "\n");
-                        textView.append(post.getUserId() + "\n");
-                        textView.append(post.getTitle() + "\n");
-                        textView.append(post.getBody() + "\n");
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<Post> call, @NonNull Throwable t) {
-
-                        textView.append("Error occurred while getting request!");
-                        t.printStackTrace();
-                    }
-                });
+//        final TextView textView = findViewById(R.id.txtEmail);
+//
+//        NetworkService.getInstance()
+//                .getJSONApi()
+//                .getPostWithID(1)
+//                .enqueue(new Callback<Post>() {
+//                    @Override
+//                    public void onResponse(@NonNull Call<Post> call, @NonNull Response<Post> response) {
+//                        Post post = response.body();
+//
+//                        textView.append(post.getId() + "\n");
+//                        textView.append(post.getUserId() + "\n");
+//                        textView.append(post.getTitle() + "\n");
+//                        textView.append(post.getBody() + "\n");
+//                    }
+//
+//                    @Override
+//                    public void onFailure(@NonNull Call<Post> call, @NonNull Throwable t) {
+//
+//                        textView.append("Error occurred while getting request!");
+//                        t.printStackTrace();
+//                    }
+//                });
     }
 
-    public void onButtonClick(View view) {
-        Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
-        startActivity(intent);
-
-    }
+//    public void onButtonClick(View view) {
+//        Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
+//        startActivity(intent);
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
