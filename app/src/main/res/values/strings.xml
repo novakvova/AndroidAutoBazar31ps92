@@ -7,4 +7,8 @@
     <string name="password">Пароль</string>
     <string name="login">Вхід</string>
     <string name="goto_register">До реєстрації</string>
+
+    <string name="product_title">Назва</string>
+    <string name="product_description">Опис</string>
+
 </resources>
