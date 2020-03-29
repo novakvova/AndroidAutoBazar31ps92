@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,13 +19,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.salo.account.JwtServiceHolder;
 import com.example.salo.prductview.ProductGridFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements NavigationHost {
+public class MainActivity extends AppCompatActivity implements NavigationHost, JwtServiceHolder {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,5 +116,29 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
         }
 
         transaction.commit();
+    }
+
+    @Override
+    public void SaveJWTToken(String token) {
+        SharedPreferences prefs;
+        SharedPreferences.Editor edit;
+        prefs=this.getSharedPreferences("jwtStore", Context.MODE_PRIVATE);
+        edit=prefs.edit();
+        try {
+            edit.putString("token",token);
+            Log.i("Login",token);
+            edit.commit();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String getToken() {
+        SharedPreferences prefs=this.getSharedPreferences("jwtStore",Context.MODE_PRIVATE);
+        String token = prefs.getString("token","");
+        return token;
     }
 }
