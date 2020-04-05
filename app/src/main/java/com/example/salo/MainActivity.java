@@ -46,17 +46,17 @@ public class MainActivity extends BaseActivity  {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.home:
-                this.navigateTo(new ProductGridFragment(), true);
+                this.navigateTo(new ProductGridFragment(), false);
                 return true;
             case R.id.login:
-                this.navigateTo(new LoginFragment(), true);
+                this.navigateTo(new LoginFragment(), false);
                 return true;
             case R.id.register:
-                this.navigateTo(new RegisterFragment(), true);
+                this.navigateTo(new RegisterFragment(), false);
                 return true;
             case R.id.logout:
                 this.removeToken();
-                this.navigateTo(new LoginFragment(), true);
+                this.navigateTo(new LoginFragment(), false);
                 return true;
             case R.id.item3:
                 Toast.makeText(this, "Item 3 selected", Toast.LENGTH_LONG).show();
