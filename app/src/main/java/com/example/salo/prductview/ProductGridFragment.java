@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.salo.NavigationHost;
 import com.example.salo.R;
 import com.example.salo.network.ProductEntry;
 import com.example.salo.network.utils.CommonUtils;
@@ -41,6 +43,20 @@ public class ProductGridFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_grid, container, false);
+
+        Button addButton = view.findViewById(R.id.add_button);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new ProductCreateFragment(), true);
+            }
+        });
+
+
+
+
+
         // Set up the RecyclerView
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);

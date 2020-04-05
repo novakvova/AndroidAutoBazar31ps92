@@ -7,6 +7,8 @@ import com.example.salo.network.interceptors.AuthorizationInterceptor;
 import com.example.salo.network.interceptors.ConnectivityInterceptor;
 import com.example.salo.network.interceptors.JWTInterceptor;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -24,6 +26,8 @@ public class ProductDTOService {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient.Builder client = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
                 .addInterceptor(new ConnectivityInterceptor())
                 .addInterceptor(new JWTInterceptor())
                 .addInterceptor(new AuthorizationInterceptor())

@@ -10,5 +10,8 @@
 
     <string name="product_title">Назва</string>
     <string name="product_description">Опис</string>
+    <string name="product_price">Ціна</string>
+    <string name="button_add">Додати</string>
+    <string name="button_cancel">Скасувати</string>
 
 </resources>
