@@ -18,10 +18,20 @@ public class MainActivity extends BaseActivity  {
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.container, new LoginFragment())
-                    .commit();
+            String token = getToken();
+            if (token != null && !token.isEmpty()) {
+                this.currentFragment = new ProductGridFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, this.currentFragment)
+                        .commit();
+            } else {
+                this.currentFragment = new LoginFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, this.currentFragment)
+                        .commit();
+            }
         }
     }
 

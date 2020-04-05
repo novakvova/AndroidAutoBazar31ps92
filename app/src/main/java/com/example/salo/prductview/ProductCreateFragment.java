@@ -64,7 +64,7 @@ public class ProductCreateFragment extends Fragment {
 
                                 if (response.isSuccessful()) {
                                     ProductCreateResultDTO resultDTO = response.body();
-                                    ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the products Fragment
+                                    ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), true); // Navigate to the products Fragment
                                     //  Log.e(TAG, "*************GOOD Request***********" + tokenDTO.getToken());
                                 } else {
                                     //  Log.e(TAG, "_______________________" + response.errorBody().charStream());

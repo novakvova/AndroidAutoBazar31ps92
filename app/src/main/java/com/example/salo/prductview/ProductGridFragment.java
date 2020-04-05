@@ -49,7 +49,7 @@ public class ProductGridFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new ProductCreateFragment(), true);
+                ((NavigationHost)getActivity()).navigateTo(new ProductCreateFragment(), false);
             }
         });
 
@@ -61,7 +61,7 @@ public class ProductGridFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2,
-                GridLayoutManager.VERTICAL, false));
+                GridLayoutManager.VERTICAL, true));
 
 //        List<ProductEntry> list = ProductEntry.initProductEntryList(getResources());
 //        ProductCardRecyclerViewAdapter adapter = new ProductCardRecyclerViewAdapter(list);
