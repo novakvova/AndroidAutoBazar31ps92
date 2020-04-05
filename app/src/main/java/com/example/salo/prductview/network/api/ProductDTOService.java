@@ -1,16 +1,12 @@
-package com.example.salo.retrofitProduct;
+package com.example.salo.prductview.network.api;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.example.salo.application.MyApplication;
+import com.example.salo.network.interceptors.AuthorizationInterceptor;
+import com.example.salo.network.interceptors.JWTInterceptor;
 
-import java.io.IOException;
-
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -26,24 +22,9 @@ public class ProductDTOService {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        SharedPreferences prefs=context.getSharedPreferences("jwtStore", Context.MODE_PRIVATE);
-        final String token = "Bearer "+ prefs.getString("token","");
-
-        Interceptor interJWT = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request originalRequest = chain.request();
-                Request newRequest = originalRequest.newBuilder()
-                        .header("Authorization", token)
-                        .build();
-                return chain.proceed(newRequest);
-            }
-        };
-
-
-
         OkHttpClient.Builder client = new OkHttpClient.Builder()
-                .addInterceptor(interJWT)
+                .addInterceptor(new JWTInterceptor())
+                .addInterceptor(new AuthorizationInterceptor())
                 .addInterceptor(interceptor);
 
         mRetrofit = new Retrofit.Builder()

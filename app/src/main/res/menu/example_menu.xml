@@ -12,6 +12,10 @@
         android:title="Реєстрація"
         app:showAsAction="never" />
 
+    <item android:id="@+id/logout"
+        android:title="Вихід"
+        app:showAsAction="never" />
+
     <item android:id="@+id/item3"
         android:title="Item 3"
         app:showAsAction="never">

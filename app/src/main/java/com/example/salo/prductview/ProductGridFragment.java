@@ -14,8 +14,9 @@ import android.view.ViewGroup;
 
 import com.example.salo.R;
 import com.example.salo.network.ProductEntry;
-import com.example.salo.retrofitProduct.ProductDTO;
-import com.example.salo.retrofitProduct.ProductDTOService;
+import com.example.salo.network.utils.CommonUtils;
+import com.example.salo.prductview.network.dto.ProductDTO;
+import com.example.salo.prductview.network.api.ProductDTOService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,30 +56,34 @@ public class ProductGridFragment extends Fragment {
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
 
         recyclerView.addItemDecoration(new ProductGridItemDecoration(largePadding, smallPadding));
-
+        CommonUtils.showLoading(getActivity());
         ProductDTOService.getInstance()
                 .getJSONApi()
                 .getAllProducts()
                 .enqueue(new Callback<List<ProductDTO>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<ProductDTO>> call, @NonNull Response<List<ProductDTO>> response) {
-                        List<ProductDTO> list = response.body();
-                        //int size = list.size();
-                        //String res= list.get(0).toString();
-                        //Log.d(TAG, "--------result server-------"+res);
+                        CommonUtils.hideLoading();
+                        if(response.isSuccessful()) {
+                            List<ProductDTO> list = response.body();
+                            //int size = list.size();
+                            //String res= list.get(0).toString();
+                            //Log.d(TAG, "--------result server-------"+res);
 
-                        List<ProductEntry> newlist = new ArrayList<ProductEntry>();//ProductEntry.initProductEntryList(getResources());
-                        for (ProductDTO item : list) {
-                            ProductEntry pe=new ProductEntry(item.getTitle(),item.getUrl(),item.getUrl(), item.getPrice(),"sdfasd");
-                            newlist.add(pe);
+                            List<ProductEntry> newlist = new ArrayList<ProductEntry>();//ProductEntry.initProductEntryList(getResources());
+                            for (ProductDTO item : list) {
+                                ProductEntry pe = new ProductEntry(item.getTitle(), item.getUrl(), item.getUrl(), item.getPrice(), "sdfasd");
+                                newlist.add(pe);
+                            }
+                            ProductCardRecyclerViewAdapter newAdapter = new ProductCardRecyclerViewAdapter(newlist);
+                            recyclerView.swapAdapter(newAdapter, false);
+                            //CommonUtils.hideLoading();
                         }
-                        ProductCardRecyclerViewAdapter newAdapter = new ProductCardRecyclerViewAdapter(newlist);
-                        recyclerView.swapAdapter(newAdapter, false);
-                        //CommonUtils.hideLoading();
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<List<ProductDTO>> call, @NonNull Throwable t) {
+                        CommonUtils.hideLoading();
                         //CommonUtils.hideLoading();
                         Log.e("ERROR","*************ERORR request***********");
 //                        if(t instanceof NoConnectivityException) {

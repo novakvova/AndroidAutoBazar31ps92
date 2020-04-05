@@ -6,4 +6,6 @@
     <color name="toolbarIconColor">#FFFFFF</color>
     <color name="loginPageBackgroundColor">#FFFFFF</color>
     <color name="productGridBackgroundColor">#FFFFFF</color>
+    <color name="errorMessage">#FF0000</color>
+    <color name="black_effective">#2a2a2a</color>
 </resources>

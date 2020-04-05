@@ -1,32 +1,16 @@
 package com.example.salo;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.salo.account.JwtServiceHolder;
 import com.example.salo.prductview.ProductGridFragment;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements NavigationHost, JwtServiceHolder {
+public class MainActivity extends BaseActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,37 +23,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, J
                     .add(R.id.container, new LoginFragment())
                     .commit();
         }
-
-//        final TextView textView = findViewById(R.id.txtEmail);
-//
-//        NetworkService.getInstance()
-//                .getJSONApi()
-//                .getPostWithID(1)
-//                .enqueue(new Callback<Post>() {
-//                    @Override
-//                    public void onResponse(@NonNull Call<Post> call, @NonNull Response<Post> response) {
-//                        Post post = response.body();
-//
-//                        textView.append(post.getId() + "\n");
-//                        textView.append(post.getUserId() + "\n");
-//                        textView.append(post.getTitle() + "\n");
-//                        textView.append(post.getBody() + "\n");
-//                    }
-//
-//                    @Override
-//                    public void onFailure(@NonNull Call<Post> call, @NonNull Throwable t) {
-//
-//                        textView.append("Error occurred while getting request!");
-//                        t.printStackTrace();
-//                    }
-//                });
     }
-
-//    public void onButtonClick(View view) {
-//        Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
-//        startActivity(intent);
-//
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, J
             case R.id.register:
                 this.navigateTo(new RegisterFragment(), true);
                 return true;
+            case R.id.logout:
+                this.removeToken();
+                this.navigateTo(new LoginFragment(), true);
+                return true;
             case R.id.item3:
                 Toast.makeText(this, "Item 3 selected", Toast.LENGTH_LONG).show();
                 return true;
@@ -104,41 +62,5 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, J
         }
     }
 
-    @Override
-    public void navigateTo(Fragment fragment, boolean addToBackstack) {
-        FragmentTransaction transaction =
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, fragment);
 
-        if (addToBackstack) {
-            transaction.addToBackStack(null);
-        }
-
-        transaction.commit();
-    }
-
-    @Override
-    public void SaveJWTToken(String token) {
-        SharedPreferences prefs;
-        SharedPreferences.Editor edit;
-        prefs=this.getSharedPreferences("jwtStore", Context.MODE_PRIVATE);
-        edit=prefs.edit();
-        try {
-            edit.putString("token",token);
-            Log.i("Login",token);
-            edit.commit();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public String getToken() {
-        SharedPreferences prefs=this.getSharedPreferences("jwtStore",Context.MODE_PRIVATE);
-        String token = prefs.getString("token","");
-        return token;
-    }
 }

@@ -1,4 +1,6 @@
-package com.example.salo.retrofitProduct;
+package com.example.salo.prductview.network.api;
+
+import com.example.salo.prductview.network.dto.ProductDTO;
 
 import java.util.List;
 

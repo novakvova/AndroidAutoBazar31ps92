@@ -11,16 +11,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.salo.account.AccountService;
 import com.example.salo.account.JwtServiceHolder;
 import com.example.salo.account.LoginDTO;
+import com.example.salo.account.LoginDTOBadRequest;
 import com.example.salo.account.TokenDTO;
 import com.example.salo.prductview.ProductGridFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +47,7 @@ public class LoginFragment extends Fragment {
         final TextInputLayout passwordTextInput = view.findViewById(R.id.password_text_input);
         final TextInputEditText passwordEditText = view.findViewById(R.id.password_edit_text);
         final TextInputEditText phoneEditText = view.findViewById(R.id.phone_edit_text);
+        final TextView errorMessage = view.findViewById(R.id.error_message);
         MaterialButton btnLogin = view.findViewById(R.id.btnLogin);
         MaterialButton btnRegister = view.findViewById(R.id.btnRegister);
 
@@ -51,6 +55,7 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                errorMessage.setText("");
                 if (!isPasswordValid(passwordEditText.getText())) {
                     passwordTextInput.setError("Пароль має бути мін 8 символів");
                 } else {
@@ -69,10 +74,20 @@ public class LoginFragment extends Fragment {
                                         TokenDTO tokenDTO = response.body();
                                         ((JwtServiceHolder) getActivity()).SaveJWTToken(tokenDTO.getToken()); // Navigate to the register Fragment
                                         ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the products Fragment
-                                        Log.e(TAG,"*************GOOD Request***********"+ tokenDTO.getToken());
+                                        //Log.e(TAG,"*************GOOD Request***********"+ tokenDTO.getToken());
                                     }
                                     else {
-                                        Log.e(TAG,"_______________________"+response.errorBody().charStream());
+                                        try {
+                                            String json = response.errorBody().string();
+                                            Gson gson = new Gson();
+                                            LoginDTOBadRequest result = gson.fromJson(json, LoginDTOBadRequest.class);
+                                            errorMessage.setText(result.getInvalid());
+                                        }
+                                        catch (Exception ex) {
+                                            errorMessage.setText(ex.getMessage());
+                                        }
+
+                                        //Log.e(TAG,"_______________________"+response.errorBody().charStream());
                                     }
 
 
@@ -83,7 +98,7 @@ public class LoginFragment extends Fragment {
                                 @Override
                                 public void onFailure(@NonNull Call<TokenDTO> call, @NonNull Throwable t) {
                                     //CommonUtils.hideLoading();
-
+                                    errorMessage.setText("У нас проблеми Хюстон");
                                     Log.e("ERROR","*************ERORR request***********");
 
                                     t.printStackTrace();

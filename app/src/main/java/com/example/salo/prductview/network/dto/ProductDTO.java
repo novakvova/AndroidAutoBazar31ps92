@@ -1,4 +1,4 @@
-package com.example.salo.retrofitProduct;
+package com.example.salo.prductview.network.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

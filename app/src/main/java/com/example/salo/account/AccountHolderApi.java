@@ -1,7 +1,5 @@
 package com.example.salo.account;
 
-import com.example.salo.retrofitProduct.ProductDTO;
-
 
 import retrofit2.Call;
 //import retrofit2.http.GET;
