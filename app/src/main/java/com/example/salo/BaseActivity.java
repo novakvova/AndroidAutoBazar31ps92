@@ -10,8 +10,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.salo.account.JwtServiceHolder;
 import com.example.salo.application.MyApplication;
+import com.example.salo.network.utils.ConnectionInternetError;
 
-public abstract class BaseActivity extends AppCompatActivity implements NavigationHost, JwtServiceHolder {
+public abstract class BaseActivity extends AppCompatActivity implements NavigationHost, JwtServiceHolder,
+        ConnectionInternetError {
+
+    protected Fragment currentFragment;
+    private Fragment callbackFragment;
 
     public BaseActivity() {
         MyApplication myApp=(MyApplication)MyApplication.getAppContext();
@@ -20,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     @Override
     public void navigateTo(Fragment fragment, boolean addToBackstack) {
+        this.currentFragment = fragment;
         FragmentTransaction transaction =
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -71,5 +77,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void navigateErrorPage() {
+        this.callbackFragment=currentFragment;
+        this.navigateTo(new ConnectionInternetErrorFragment(), true);
+    }
+
+    @Override
+    public void refreshLastPage() {
+        this.navigateTo(this.callbackFragment, true);
     }
 }

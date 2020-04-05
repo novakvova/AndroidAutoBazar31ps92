@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.salo.application.MyApplication;
 import com.example.salo.network.interceptors.AuthorizationInterceptor;
+import com.example.salo.network.interceptors.ConnectivityInterceptor;
 import com.example.salo.network.interceptors.JWTInterceptor;
 
 import okhttp3.OkHttpClient;
@@ -23,6 +24,7 @@ public class ProductDTOService {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient.Builder client = new OkHttpClient.Builder()
+                .addInterceptor(new ConnectivityInterceptor())
                 .addInterceptor(new JWTInterceptor())
                 .addInterceptor(new AuthorizationInterceptor())
                 .addInterceptor(interceptor);
