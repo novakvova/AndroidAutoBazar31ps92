@@ -1,6 +1,7 @@
 package com.example.salo.prductview;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ import retrofit2.Response;
 
 public class ProductGridFragment extends Fragment implements OnEditListener, OnDeleteListener {
 
+    private final int REQUEST_CODE_EDIT = 101;
     private RecyclerView recyclerView;
     Button addButton;
 
@@ -74,7 +76,7 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2,
                 GridLayoutManager.VERTICAL, true));
 
-        productEntryList=new ArrayList<>();
+        productEntryList = new ArrayList<>();
         productAdapter = new ProductCardRecyclerViewAdapter(productEntryList, this, this);
         recyclerView.setAdapter(productAdapter);
 
@@ -166,7 +168,6 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
                 });
     }
 
-
     @Override
     public void deleteItem(final ProductEntry productEntry) {
         new MaterialAlertDialogBuilder(getContext())
@@ -183,10 +184,20 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
                 .show();
     }
 
-
     @Override
     public void editItem(ProductEntry productEntry, int index) {
-        Toast.makeText(getActivity(), "Edit"+ productEntry.title, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getActivity(), ProductEditActivity.class);
+        intent.putExtra(Constants.PRODUCT_INTENT_ID, productEntry.id);
+        startActivityForResult(intent, REQUEST_CODE_EDIT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_CODE_EDIT){
+            if(resultCode == -1){
+                loadProductEntryList();
+            }
+        }
     }
 }
 
