@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ProductDTO {
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("title")
     @Expose
     private String title;
@@ -13,6 +16,14 @@ public class ProductDTO {
     @SerializedName("price")
     @Expose
     private String price;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -41,7 +52,8 @@ public class ProductDTO {
     @Override
     public String toString() {
         return "ProductDTO{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", url='" + url + '\'' +
                 ", price='" + price + '\'' +
                 '}';
